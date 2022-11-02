@@ -15,7 +15,7 @@ class AnimationManager {
             preset: AnimationPreset.allCases.randomElement()?.rawValue ?? "",
             curve: AnimationCurve.allCases.randomElement()?.rawValue ?? "",
             force: Float.random(in: 0 ... 2),
-            duration: Float.random(in: 0.5 ... 3),
+            duration: Float.random(in: 0.5 ... 2),
             delay: 0.3
         )
     }
