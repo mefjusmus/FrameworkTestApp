@@ -10,56 +10,34 @@ import SpringAnimation
 
 class MainViewController: UIViewController {
     
-    @IBOutlet var presetLabel: UILabel!
-    @IBOutlet var curveLabel: UILabel!
-    @IBOutlet var forceLabel: UILabel!
-    @IBOutlet var durationLabel: UILabel!
-    @IBOutlet var delayLabel: UILabel!
     
-    
+    @IBOutlet var descriptionLabel: UILabel! {
+        didSet {
+            descriptionLabel.text = animation.description
+        }
+    }
     @IBOutlet var springAnimationView: SpringView!
     
-    private var parameters = AnimationManager.getParameters()
+    private var animation = Animation.getAnimation()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        updateLabelText()
-    }
-    
-    
-
     @IBAction func runButtonDidPressed(_ sender: UIButton) {
-        setupAnimation()
+        setup(animation)
         springAnimationView.animate()
-        updateLabelText()
-        parameters = AnimationManager.getParameters()
+        descriptionLabel.text = animation.description
+        animation = .getAnimation()
         updateTitle(for: sender)
     }
     
-    private func setupAnimation() {
-        springAnimationView.duration = CGFloat(parameters.duration)
-        springAnimationView.delay = CGFloat(parameters.delay)
-        springAnimationView.force = CGFloat(parameters.force)
-        springAnimationView.curve = parameters.curve
-        springAnimationView.animation = parameters.preset
-        springAnimationView.animateFrom = false
-    }
-    
-    private func updateLabelText() {
-        presetLabel.text = "preset: \(parameters.preset)"
-        curveLabel.text = "curve: \(parameters.curve)"
-        forceLabel.text = "force: \(string(from:parameters.force))"
-        durationLabel.text = "duration: \(string(from: parameters.duration))"
-        delayLabel.text = "delay: \(string(from: parameters.delay))"
+    private func setup(_ animation: Animation) {
+        springAnimationView.duration = animation.duration
+        springAnimationView.delay = animation.delay
+        springAnimationView.force = animation.force
+        springAnimationView.curve = animation.curve
+        springAnimationView.animation = animation.preset
     }
     
     private func updateTitle(for button: UIButton) {
-        button.setTitle("Run \(parameters.preset)", for: .normal)
-    }
-    
-    
-    private func string(from float: Float) -> String {
-        String(format: "%.2f", float)
+        button.setTitle("Run \(animation.preset)", for: .normal)
     }
     
 
